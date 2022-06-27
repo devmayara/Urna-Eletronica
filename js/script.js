@@ -9,6 +9,7 @@ let numeros = document.querySelector('.d-1-3');
 let etapaAtual = 0;
 let numero = '';
 let votoBranco = false;
+let votos = [];
 
 function comecarEtapa() {
     let etapa = etapas[etapaAtual];
@@ -86,7 +87,7 @@ function branco() {
     seuVotoPara.style.display = 'block';
     aviso.style.display = 'block';
     numeros.innerHTML = '';
-    descricao.innerHTML = '<br/><div class="aviso--grande pisca">VOTO EM BRANCO</div>';        
+    descricao.innerHTML = '<br/><div class="aviso--grande pisca">VOTO EM BRANCO</div>';
     lateral.innerHTML = '';
 }
 
@@ -101,8 +102,16 @@ function confirma() {
 
     if(votoBranco === true) {
         votoConfirmado = true;
+        votos.push({
+            etapa: etapas[etapaAtual].titulo,
+            voto: "branco"
+        });
     } else if(numero.length === etapa.numeros) {
         votoConfirmado = true;
+        votos.push({
+            etapa: etapas[etapaAtual].titulo,
+            voto: numero
+        });
     }
 
     if(votoConfirmado) {
@@ -110,7 +119,8 @@ function confirma() {
         if(etapas[etapaAtual] !== undefined) {
             comecarEtapa();
         } else {
-            console.log('');
+            document.querySelector('.tela').innerHTML = '<br/><div class="aviso--gigante pisca">FIM</div>';
+            console.log(votos);
         }
     }
 }
